@@ -9,6 +9,9 @@ import {
 } from '@/app/core/store/round/round.selectors'
 import {MessageActions} from '@/app/core/store/message/message.actions'
 import {RoundActions} from '@/app/core/store/round/round.actions'
+import {socket} from '@/app/socket'
+import {PlayerActions} from '@/app/core/store/players/players.actions'
+import {Player} from '@/app/core/models/player.model'
 
 const Chart = lazy(() => import('./components/chart/Chart'))
 const ChatBox = lazy(() => import('./components/chats/ChatBox'))
@@ -42,6 +45,21 @@ export function Game() {
 
     const defaultAnimationDuration = 15
 
+    // 'playerCreated'
+
+    useEffect(() => {
+        if (player) {
+            socket.connect()
+
+            socket.on(`playerCreated:${player.id}`, handleNewPlayer)
+
+            return () => {
+                socket.off(`playerCreated:${player.id}`, handleNewPlayer)
+                socket.disconnect()
+            }
+        }
+    }, [player])
+
     useEffect(() => {
         if (round) {
             dispatch(MessageActions.load(round.id as string) as any)
@@ -57,6 +75,10 @@ export function Game() {
             }, (defaultAnimationDuration * 1000) / bet.speed)
         }
     }, [results])
+
+    const handleNewPlayer = (player: Player) => {
+        dispatch(PlayerActions.add({...player}))
+    }
 
     const clearRound = () => {
         setIsDone(true)

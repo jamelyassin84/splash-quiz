@@ -4,14 +4,20 @@ import axios from 'axios'
 import {API_URL} from '../../constants/constants'
 
 const system = {
-    setLoader: createAction('Player loader', (loading: boolean) => ({
+    setLoader: createAction('Player setLoader', (loading: boolean) => ({
         payload: {
             loading,
         },
     })),
 }
 
-const upsert = createAsyncThunk('Player request', async (payload: Player) => {
+const add = createAction('Player loader', (player: Player) => ({
+    payload: {
+        player,
+    },
+}))
+
+const upsert = createAsyncThunk('Player upsert', async (payload: Player) => {
     try {
         const response = await axios.post(API_URL + 'players', {
             ...payload,
@@ -23,4 +29,4 @@ const upsert = createAsyncThunk('Player request', async (payload: Player) => {
     }
 })
 
-export const PlayerActions = {system, upsert}
+export const PlayerActions = {system, upsert, add}

@@ -20,4 +20,7 @@ export const playersReducer = createReducer(initialState, (builder) => {
         .addCase(PlayerActions.upsert.fulfilled, (state, action) =>
             playerAdapter.setAll(state, action.payload),
         )
+        .addCase(PlayerActions.add, (state, action) =>
+            playerAdapter.upsertOne(state, action.payload.player),
+        )
 })
