@@ -1,7 +1,7 @@
 import {playersSelector} from '@/app/core/store/players/players.selectors'
 import {betSelector} from '@/app/core/store/round/round.selectors'
 import Image from 'next/image'
-import React from 'react'
+import React, {lazy} from 'react'
 import {useSelector} from 'react-redux'
 
 interface Props {

@@ -2,20 +2,9 @@ import {empty} from '@/app/core/helpers/helpers'
 import {Bet} from '@/app/core/models/bet.model'
 import {ChartData} from '@/app/core/models/system/chart-data.model'
 import React, {useEffect, useState} from 'react'
+import {Line, LineChart, XAxis, YAxis} from 'recharts'
 
 const CountUp = React.lazy(() => import('react-countup'))
-const Line = React.lazy(() =>
-    import('recharts').then((module) => ({default: module.Line})),
-)
-const LineChart = React.lazy(() =>
-    import('recharts').then((module) => ({default: module.LineChart})),
-)
-const XAxis = React.lazy(() =>
-    import('recharts').then((module) => ({default: module.XAxis})),
-)
-const YAxis = React.lazy(() =>
-    import('recharts').then((module) => ({default: module.YAxis})),
-)
 
 interface Props {
     defaultAnimationDuration: number
@@ -109,27 +98,24 @@ const Chart = (props: Props) => {
             <div className="absolute w-full p-10 bottom-10">
                 {data.length !== 0 && (
                     <div>
-                        <React.Suspense fallback={<span></span>}>
-                            <LineChart width={730} height={350} data={data}>
-                                <XAxis dataKey="name" domain={[0, 50]} />
-                                <div className="hidden">
-                                    <YAxis domain={[0, 10]} />
-                                </div>
-                                <Line
-                                    type="monotone"
-                                    dataKey="value"
-                                    stroke={'#F8645B'}
-                                    strokeWidth={5}
-                                    animationDuration={
-                                        (defaultAnimationDuration /
-                                            (bet?.speed ?? 1)) *
-                                        1000
-                                    }
-                                    dot={renderDot}
-                                    tension={1}
-                                />
-                            </LineChart>
-                        </React.Suspense>
+                        <LineChart width={730} height={350} data={data}>
+                            <XAxis dataKey="name" domain={[0, 50]} />
+                            <div className="hidden">
+                                <YAxis domain={[0, 10]} />
+                            </div>
+                            <Line
+                                type="monotone"
+                                dataKey="value"
+                                stroke={'#F8645B'}
+                                strokeWidth={5}
+                                animationDuration={
+                                    (defaultAnimationDuration / bet?.speed) *
+                                    1000
+                                }
+                                dot={renderDot}
+                                tension={1}
+                            />
+                        </LineChart>
                     </div>
                 )}
             </div>

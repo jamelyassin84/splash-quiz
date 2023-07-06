@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {lazy} from 'react'
 import ChatMessages from './ChatMessages'
 import NewChat from './NewChat'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 
 export default function ChatBox() {
     return (
