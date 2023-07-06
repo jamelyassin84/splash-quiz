@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, {useEffect} from 'react'
 import Chart from './components/chart/Chart'
 import ChatBox from './components/chats/ChatBox'
 import CurrentRound from './components/configurations/CurrentRound'
@@ -9,12 +9,24 @@ import SpeedConfiguration from './components/configurations/SpeedConfiguration'
 import EnterPlayerName from './components/enter-player-name/EnterPlayerName'
 import Ranking from './components/ranking/Ranking'
 import Header from './components/headers/Header'
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {playerSelector} from '@/app/core/store/players/players.selectors'
 import {empty} from '@/app/core/helpers/helpers'
+import {roundSelector} from '@/app/core/store/round/round.selectors'
+import {MessageActions} from '@/app/core/store/message/message.actions'
 
 export function Game() {
     const player = useSelector(playerSelector)
+
+    const dispatch = useDispatch()
+
+    const round = useSelector(roundSelector)
+
+    useEffect(() => {
+        if (round) {
+            dispatch(MessageActions.load(round.id as string) as any)
+        }
+    }, [round])
 
     return (
         <div className="items-center w-full pt-6 pb-20">

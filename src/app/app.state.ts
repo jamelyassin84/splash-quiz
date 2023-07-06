@@ -2,9 +2,11 @@ import {configureStore} from '@reduxjs/toolkit'
 import {PlayerState} from './core/store/players/players.reducer'
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from './core/store/root.reducer'
+import {MessageState} from './core/store/message/message.reducer'
 
 export interface AppState {
     player: PlayerState
+    messages: MessageState
 }
 
 const store = configureStore({

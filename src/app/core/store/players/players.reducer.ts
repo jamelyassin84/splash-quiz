@@ -18,9 +18,7 @@ export const playersReducer = createReducer(initialState, (builder) => {
             ...state,
             error: action.payload.loading,
         }))
-        .addCase(PlayerActions.upsert.fulfilled, (state, action) => {
-            console.log(action.payload)
-
-            return playerAdapter.setAll(state, action.payload)
-        })
+        .addCase(PlayerActions.upsert.fulfilled, (state, action) =>
+            playerAdapter.setAll(state, action.payload),
+        )
 })
