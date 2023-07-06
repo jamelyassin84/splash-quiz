@@ -1,19 +1,39 @@
+import {empty} from '@/app/core/helpers/helpers'
+import {Bet} from '@/app/core/models/bet.model'
 import {ChartData} from '@/app/core/models/system/chart-data.model'
-import {playerSelector} from '@/app/core/store/players/players.selectors'
 import React, {useEffect, useState} from 'react'
-import CountUp from 'react-countup'
-import {useSelector} from 'react-redux'
-import {Line, LineChart, XAxis, YAxis} from 'recharts'
 
-const Chart = () => {
+const CountUp = React.lazy(() => import('react-countup'))
+const Line = React.lazy(() =>
+    import('recharts').then((module) => ({default: module.Line})),
+)
+const LineChart = React.lazy(() =>
+    import('recharts').then((module) => ({default: module.LineChart})),
+)
+const XAxis = React.lazy(() =>
+    import('recharts').then((module) => ({default: module.XAxis})),
+)
+const YAxis = React.lazy(() =>
+    import('recharts').then((module) => ({default: module.YAxis})),
+)
+
+interface Props {
+    defaultAnimationDuration: number
+    bet: Bet
+    winningNumber: number
+    started: boolean
+}
+const Chart = (props: Props) => {
+    const {defaultAnimationDuration, bet, started} = props
+
     const [data, setData] = useState<ChartData[]>([])
     const [winningNumber, setWinningNumber] = useState<number>(0)
 
-    const player = useSelector(playerSelector)
-
     useEffect(() => {
-        // start(5.64)
-    }, [])
+        if (started) {
+            start(props.winningNumber)
+        }
+    }, [started])
 
     const start = (endValue: number) => {
         const newData: ChartData[] = []
@@ -75,33 +95,41 @@ const Chart = () => {
     return (
         <div className="bg-card border border-default-border w-full min-h-[600px] rounded-lg bg-card-bg relative">
             <div className={`mt-32 font-black text-center e text-7xl `}>
-                <CountUp
-                    start={0}
-                    end={winningNumber}
-                    duration={5}
-                    decimals={2}
-                />
+                <React.Suspense fallback={<span></span>}>
+                    <CountUp
+                        start={0}
+                        end={winningNumber}
+                        duration={defaultAnimationDuration / (bet?.speed ?? 1)}
+                        decimals={2}
+                    />
+                </React.Suspense>
                 x
             </div>
 
             <div className="absolute w-full p-10 bottom-10">
                 {data.length !== 0 && (
                     <div>
-                        <LineChart width={730} height={350} data={data}>
-                            <XAxis dataKey="name" domain={[0, 10]} />
-                            <div className="hidden">
-                                <YAxis domain={[0, 10]} />
-                            </div>
-                            <Line
-                                type="monotone"
-                                dataKey="value"
-                                stroke={'#F8645B'}
-                                strokeWidth={5}
-                                animationDuration={5 * 1000}
-                                dot={renderDot}
-                                tension={1}
-                            />
-                        </LineChart>
+                        <React.Suspense fallback={<span></span>}>
+                            <LineChart width={730} height={350} data={data}>
+                                <XAxis dataKey="name" domain={[0, 50]} />
+                                <div className="hidden">
+                                    <YAxis domain={[0, 10]} />
+                                </div>
+                                <Line
+                                    type="monotone"
+                                    dataKey="value"
+                                    stroke={'#F8645B'}
+                                    strokeWidth={5}
+                                    animationDuration={
+                                        (defaultAnimationDuration /
+                                            (bet?.speed ?? 1)) *
+                                        1000
+                                    }
+                                    dot={renderDot}
+                                    tension={1}
+                                />
+                            </LineChart>
+                        </React.Suspense>
                     </div>
                 )}
             </div>

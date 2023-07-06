@@ -1,7 +1,15 @@
+import {Bet} from '@/app/core/models/bet.model'
 import React, {useState} from 'react'
 
-export default function MultiplierConfiguration() {
-    const [multiplier, setMultiplier] = useState(2)
+interface Props {
+    bet: Bet
+    onChange: Function
+    started: boolean
+}
+export default function MultiplierConfiguration(props: Props) {
+    const {bet, onChange, started} = props
+
+    const [multiplier, setMultiplier] = useState(bet.multiplier)
 
     const handleDecrement = () => {
         setMultiplier((prevMultiplier) => Math.max(prevMultiplier - 0.25, 0))
@@ -15,6 +23,7 @@ export default function MultiplierConfiguration() {
         const value = parseFloat(event.target.value)
         if (!isNaN(value)) {
             setMultiplier(parseFloat(value.toFixed(2)))
+            onChange(parseFloat(value.toFixed(2)))
         }
     }
 
@@ -22,7 +31,9 @@ export default function MultiplierConfiguration() {
         <div className="flex items-end px-3 py-1 border rounded-lg border-default-border/40 bg-gradient-to-r from-bg via-card-bg/50 to-card-bg">
             <div className="mx-2 mb-2">
                 <button
-                    className="flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50"
+                    className={`flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50 ${
+                        started ? 'pointer-events-none' : ''
+                    }`}
                     onClick={handleDecrement}
                 >
                     <svg
@@ -48,6 +59,7 @@ export default function MultiplierConfiguration() {
                     value={multiplier}
                     step={0.25}
                     min={0}
+                    disabled={started}
                     onChange={handleChange}
                     className="w-full px-3 py-2 mr-4 text-lg font-bold text-center appearance-none rounded-2xl bg-input focus:outline-none"
                 />
@@ -55,7 +67,9 @@ export default function MultiplierConfiguration() {
 
             <div className="mx-2 mb-2">
                 <button
-                    className="flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50"
+                    className={`flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50 ${
+                        started ? 'pointer-events-none' : ''
+                    }`}
                     onClick={handleIncrement}
                 >
                     <svg

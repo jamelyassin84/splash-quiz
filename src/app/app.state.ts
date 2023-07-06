@@ -3,10 +3,12 @@ import {PlayerState} from './core/store/players/players.reducer'
 import thunkMiddleware from 'redux-thunk'
 import rootReducer from './core/store/root.reducer'
 import {MessageState} from './core/store/message/message.reducer'
+import {RoundState} from './core/store/round/round.reducer'
 
 export interface AppState {
     player: PlayerState
     messages: MessageState
+    rounds: RoundState
 }
 
 const store = configureStore({

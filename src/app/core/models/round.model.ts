@@ -6,5 +6,5 @@ export interface Round extends BaseModel {
     name: string
     bets: Bet[]
     isRoundActive: boolean
-    winningNumber: boolean
+    winningNumber: number
 }

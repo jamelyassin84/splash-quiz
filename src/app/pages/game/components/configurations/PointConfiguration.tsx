@@ -1,9 +1,16 @@
 'use client'
-
+import {Bet} from '@/app/core/models/bet.model'
 import React, {useState} from 'react'
 
-export default function PointConfiguration() {
-    const [points, setPoints] = useState(50)
+interface Props {
+    bet: Bet
+    onChange: Function
+    started: boolean
+}
+export default function PointConfiguration(props: Props) {
+    const {bet, onChange, started} = props
+
+    const [points, setPoints] = useState(bet.points)
 
     const handleIncrement = () => {
         setPoints(points + 25)
@@ -12,6 +19,7 @@ export default function PointConfiguration() {
     const handleDecrement = () => {
         if (points > 25) {
             setPoints(points - 25)
+            onChange(points - 25)
         }
     }
 
@@ -19,7 +27,9 @@ export default function PointConfiguration() {
         <div className="flex items-end px-3 py-1 border rounded-lg border-default-border/40 bg-gradient-to-r from-bg via-card-bg/50 to-card-bg">
             <div className="mx-2 mb-2">
                 <button
-                    className="flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50"
+                    className={`flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50 ${
+                        started ? 'pointer-events-none' : ''
+                    }`}
                     onClick={handleDecrement}
                 >
                     <svg
@@ -48,7 +58,9 @@ export default function PointConfiguration() {
 
             <div className="mx-2 mb-2">
                 <button
-                    className="flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50"
+                    className={`flex items-center justify-center w-[35px] h-[35px] border-2 border-default-border rounded-xl active:brightness-150 md:hover:bg-gray-400/50 ${
+                        started ? 'pointer-events-none' : ''
+                    }`}
                     onClick={handleIncrement}
                 >
                     <svg

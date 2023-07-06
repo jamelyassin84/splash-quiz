@@ -17,8 +17,4 @@ export const messageSelector = createSelector(
     },
 )
 
-export const playersSelector = createSelector(feature, (state: MessageState) =>
-    messageAdapter.getSelectors().selectAll(state),
-)
-
 export const playerBaseSelectors = messageAdapter.getSelectors()
