@@ -1,5 +1,5 @@
 'use client'
-import React, {Component} from 'react'
+import React from 'react'
 import Chart from './components/chart/Chart'
 import ChatBox from './components/chats/ChatBox'
 import CurrentRound from './components/configurations/CurrentRound'
@@ -10,10 +10,7 @@ import EnterPlayerName from './components/enter-player-name/EnterPlayerName'
 import Ranking from './components/ranking/Ranking'
 import Header from './components/headers/Header'
 import {useSelector} from 'react-redux'
-import {
-    playerSelector,
-    playersSelector,
-} from '@/app/core/store/players/players.selectors'
+import {playerSelector} from '@/app/core/store/players/players.selectors'
 import {empty} from '@/app/core/helpers/helpers'
 
 export function Game() {
