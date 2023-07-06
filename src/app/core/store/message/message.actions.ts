@@ -1,8 +1,9 @@
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios'
 import {API_URL} from '../../constants/constants'
+import {Message} from '../../models/message.model'
 
-export const system = {
+const system = {
     setLoader: createAction('Message loader', (loading: boolean) => ({
         payload: {
             loading,
@@ -10,17 +11,30 @@ export const system = {
     })),
 }
 
-export const load = createAsyncThunk(
-    'Message request',
-    async (roundId: string) => {
-        try {
-            const response = await axios.get(API_URL + `messages/${roundId}`)
+const upsert = createAction('Message upsert', (message: Message) => ({
+    payload: {
+        message,
+    },
+}))
 
-            return response.data
+const add = createAsyncThunk(
+    'Message add',
+    async (message: {playerId: string; roundId: string; content: string}) => {
+        try {
+            await axios.post(API_URL + `messages/`, message)
         } catch (error) {
             console.warn(error)
         }
     },
 )
+const load = createAsyncThunk('Message request', async (roundId: string) => {
+    try {
+        const response = await axios.get(API_URL + `messages/${roundId}`)
 
-export const MessageActions = {system, load}
+        return response.data
+    } catch (error) {
+        console.warn(error)
+    }
+})
+
+export const MessageActions = {system, load, upsert, add}

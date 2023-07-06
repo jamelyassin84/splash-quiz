@@ -14,10 +14,9 @@ export const initialState: PlayerState = playerAdapter.getInitialState({
 
 export const playersReducer = createReducer(initialState, (builder) => {
     builder
-        .addCase(PlayerActions.system.setLoader, (state, action) => ({
-            ...state,
-            error: action.payload.loading,
-        }))
+        .addCase(PlayerActions.system.setLoader, (state, action) => {
+            state.loading = action.payload.loading
+        })
         .addCase(PlayerActions.upsert.fulfilled, (state, action) =>
             playerAdapter.setAll(state, action.payload),
         )
