@@ -22,7 +22,6 @@ export default function Ranking(props: Props) {
 
     const winningNumber = useSelector(currentResultSelector)?.winningNumber
 
-    // Sort players based on winning numbers in descending order
     const sortedPlayers = players
         .map((p) => {
             if (p && !p.isCPU && bet) {

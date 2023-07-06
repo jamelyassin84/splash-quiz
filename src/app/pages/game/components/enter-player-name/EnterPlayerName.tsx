@@ -18,7 +18,7 @@ export default function EnterPlayerName() {
         },
         validationSchema,
         onSubmit: (values) => {
-            const player = {...values, isCPU: false, totalPoints: '100'}
+            const player = {...values, isCPU: false}
             dispatch(PlayerActions.upsert(player as any) as any)
         },
     })

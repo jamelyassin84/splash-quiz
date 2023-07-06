@@ -1,6 +1,9 @@
 import React, {useEffect, useState, lazy, Suspense} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {playerSelector} from '@/app/core/store/players/players.selectors'
+import {
+    playerSelector,
+    playersSelector,
+} from '@/app/core/store/players/players.selectors'
 import {empty} from '@/app/core/helpers/helpers'
 import {
     betSelector,
@@ -37,6 +40,7 @@ export function Game() {
     const dispatch = useDispatch()
     const round = useSelector(roundSelector)
     const player = useSelector(playerSelector)
+    const players = useSelector(playersSelector)
     const bet = useSelector(betSelector)
     const results = useSelector(currentResultSelector)
 
@@ -86,8 +90,16 @@ export function Game() {
     }
 
     const startGame = () => {
-        if (round) {
-            dispatch(RoundActions.create(round.id as string) as any)
+        if (round && player) {
+            dispatch(
+                RoundActions.create({
+                    roundId: round.id!,
+                    playerId: player?.id!,
+                    points: bet.points,
+                    multiplier: bet.multiplier,
+                    players: players,
+                }) as any,
+            )
         }
     }
 
