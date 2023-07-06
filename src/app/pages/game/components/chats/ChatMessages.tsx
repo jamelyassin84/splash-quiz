@@ -51,10 +51,13 @@ export default function ChatMessages() {
                         {message.player.name}
                     </div>
                     <div
-                        className={`p-0.5 ml-3 text-white   max-w-full rounded-lg ${
+                        className={`p-0.5 ml-3 text-white max-w-full rounded-lg ${
                             i % 2 === 0 ? 'bg-secondary' : 'bg-gray-400'
                         } text-xs px-2 break-words`}
-                        style={{wordBreak: 'break-word'}}
+                        style={{
+                            wordBreak: 'break-word',
+                            whiteSpace: 'pre-wrap',
+                        }}
                     >
                         {message.content}
                     </div>

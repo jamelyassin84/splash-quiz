@@ -49,24 +49,28 @@ export function Game() {
 
     const defaultAnimationDuration = 15
 
-    // 'playerCreated'
-
-    useEffect(() => {
-        if (player) {
-            socket.connect()
-
-            socket.on(`playerCreated:${player.id}`, handleNewPlayer)
-
-            return () => {
-                socket.off(`playerCreated:${player.id}`, handleNewPlayer)
-                socket.disconnect()
-            }
-        }
-    }, [player])
-
     useEffect(() => {
         if (round) {
             dispatch(MessageActions.load(round.id as string) as any)
+        }
+
+        if (player && round) {
+            socket.connect()
+
+            socket.on(`playerCreated:${player.id}`, handleNewPlayer)
+            socket.on(`playerCreated:${round.id}`, handleNewPlayer)
+            socket.on(`totalPoints:${player.id}`, (value: string) => {
+                dispatch(
+                    PlayerActions.add({
+                        ...player,
+                        totalPoints: value,
+                    }),
+                )
+            })
+
+            return () => {
+                socket.disconnect()
+            }
         }
     }, [round])
 
@@ -98,6 +102,7 @@ export function Game() {
                     points: bet.points,
                     multiplier: bet.multiplier,
                     players: players,
+                    speed: bet.speed,
                 }) as any,
             )
         }
@@ -188,6 +193,7 @@ export function Game() {
                             <Chart
                                 bet={bet}
                                 started={started}
+                                isDone={isDone}
                                 winningNumber={results?.winningNumber as number}
                                 defaultAnimationDuration={
                                     defaultAnimationDuration

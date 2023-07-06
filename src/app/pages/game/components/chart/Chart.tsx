@@ -11,9 +11,10 @@ interface Props {
     bet: Bet
     winningNumber: number
     started: boolean
+    isDone: boolean
 }
 const Chart = (props: Props) => {
-    const {defaultAnimationDuration, bet, started} = props
+    const {defaultAnimationDuration, bet, started, isDone} = props
 
     const [data, setData] = useState<ChartData[]>([])
     const [winningNumber, setWinningNumber] = useState<number>(0)
@@ -83,7 +84,11 @@ const Chart = (props: Props) => {
 
     return (
         <div className="bg-card border border-default-border w-full min-h-[600px] rounded-lg bg-card-bg relative">
-            <div className={`mt-32 font-black text-center e text-7xl `}>
+            <div
+                className={`mt-32 font-black text-center e text-7xl  ${
+                    isDone ? 'text-rose-500' : 'text-white'
+                }`}
+            >
                 <React.Suspense fallback={<span></span>}>
                     <CountUp
                         start={0}

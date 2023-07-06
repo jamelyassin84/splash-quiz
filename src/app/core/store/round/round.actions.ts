@@ -22,6 +22,7 @@ const create = createAsyncThunk(
         roundId: string
         playerId: string
         points: number
+        speed: number
         multiplier: number
         players: Player[]
     }) => {
