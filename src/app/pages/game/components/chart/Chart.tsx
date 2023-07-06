@@ -8,7 +8,7 @@ const Chart = () => {
     const [winningNumber, setWinningNumber] = useState<number>(0)
 
     useEffect(() => {
-        start(9.64)
+        start(5.64)
 
         // Math.random() * (10 - 0) + 0
     }, [])
@@ -16,7 +16,6 @@ const Chart = () => {
     const start = (endValue: number) => {
         const newData: ChartData[] = []
         let startValue = 0
-
         for (let i = 0; i <= 10; i++) {
             if (startValue < endValue) {
                 newData.push({name: i.toString(), value: startValue})
