@@ -11,7 +11,7 @@ export class HttpService {
     protected lastStatusCode = 200
 
     constructor() {
-        this.url = ''
+        this.url = 'http://localhost:8000'
     }
 
     public static getInstance() {

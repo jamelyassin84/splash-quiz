@@ -1,16 +1,18 @@
 import {ChartData} from '@/app/core/models/system/chart-data.model'
+import {playerSelector} from '@/app/core/store/players/players.selectors'
 import React, {useEffect, useState} from 'react'
 import CountUp from 'react-countup'
+import {useSelector} from 'react-redux'
 import {Line, LineChart, XAxis, YAxis} from 'recharts'
 
 const Chart = () => {
     const [data, setData] = useState<ChartData[]>([])
     const [winningNumber, setWinningNumber] = useState<number>(0)
 
-    useEffect(() => {
-        start(5.64)
+    const player = useSelector(playerSelector)
 
-        // Math.random() * (10 - 0) + 0
+    useEffect(() => {
+        // start(5.64)
     }, [])
 
     const start = (endValue: number) => {

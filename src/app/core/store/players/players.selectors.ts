@@ -1,11 +1,6 @@
+import {createSelector} from '@reduxjs/toolkit'
 import {AppState} from '@/app/app.state'
 import {PlayerState, playerAdapter} from './players.reducer'
-import {createSelector} from '@reduxjs/toolkit'
-import {
-    toArrayEntity,
-    toObjectEntity,
-} from '../../helpers/transfor-entity.helper'
-import {Player} from '../../models/player.model'
 
 const feature = (state: AppState) => state.player
 
@@ -14,14 +9,13 @@ export const playerIsLoading = createSelector(
     (state: PlayerState) => state.loading,
 )
 
-export const playerSelector = createSelector(feature, (state: PlayerState) =>
-    (toArrayEntity(state.entities as any) as Player[]).find(
-        (p) => p.isCPU === false,
-    ),
-)
+export const playerSelector = createSelector(feature, (state: PlayerState) => {
+    const players = playerAdapter.getSelectors().selectEntities(state)
+    return Object.values(players).find((p) => !p?.isCPU)
+})
 
 export const playersSelector = createSelector(feature, (state: PlayerState) =>
-    toArrayEntity(state.entities as any),
+    playerAdapter.getSelectors().selectAll(state),
 )
 
 export const playerBaseSelectors = playerAdapter.getSelectors()

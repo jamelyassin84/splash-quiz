@@ -1,7 +1,11 @@
+import {playersSelector} from '@/app/core/store/players/players.selectors'
 import Image from 'next/image'
 import React from 'react'
+import {useSelector} from 'react-redux'
 
 export default function CurrentRound() {
+    const players = useSelector(playersSelector)
+
     return (
         <div className="mt-5">
             <div className="flex items-end">
@@ -24,9 +28,17 @@ export default function CurrentRound() {
                         </tr>
                     </thead>
                     <tbody>
-                        {[1, 2, 3, 4, 5].map((v, index) => (
+                        {players.map((player, index) => (
                             <tr key={index}>
-                                <td className="px-8 py-3 text-sm">You</td>
+                                <td
+                                    className={`px-8 py-3 text-sm ${
+                                        !player.isCPU
+                                            ? 'bg-[#485062] ${#important}'
+                                            : ''
+                                    }`}
+                                >
+                                    {player.isCPU ? player.name : 'You'}
+                                </td>
                                 <td className="px-8 py-3 text-sm">-</td>
                                 <td className="px-8 py-3 text-sm">-</td>
                             </tr>
