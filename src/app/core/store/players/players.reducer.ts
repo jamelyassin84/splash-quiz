@@ -23,4 +23,7 @@ export const playersReducer = createReducer(initialState, (builder) => {
         .addCase(PlayerActions.add, (state, action) =>
             playerAdapter.upsertOne(state, action.payload.player),
         )
+        .addCase(PlayerActions.clear, (state, action) =>
+            playerAdapter.removeAll(state),
+        )
 })

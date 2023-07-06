@@ -35,5 +35,6 @@ const create = createAsyncThunk(
         }
     },
 )
+const clear = createAction('Round clear')
 
-export const RoundActions = {system, create, config, stop}
+export const RoundActions = {system, create, config, clear}

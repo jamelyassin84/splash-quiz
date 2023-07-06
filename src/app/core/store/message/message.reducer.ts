@@ -23,4 +23,7 @@ export const messageReducer = createReducer(initialState, (builder) => {
         .addCase(MessageActions.upsert, (state, action) =>
             messageAdapter.upsertOne(state, action.payload.message as any),
         )
+        .addCase(MessageActions.clear, (state, action) =>
+            messageAdapter.removeAll(state),
+        )
 })

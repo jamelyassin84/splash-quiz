@@ -1,27 +1,40 @@
-export const CHART_OPTIONS = {
-    scales: {
-        y: {
-            display: false,
-            max: 210,
-            beginAtZero: true,
+import {Bet} from '../../models/bet.model'
+
+export const getChartOptions = (data: {
+    defaultAnimationDuration: number
+    bet: Bet
+}) => {
+    const {defaultAnimationDuration, bet} = data
+
+    return {
+        scales: {
+            x: {
+                beginAtZero: true,
+                max: 50,
+                grid: {
+                    display: false,
+                },
+            },
+            y: {
+                beginAtZero: true,
+                max: 10,
+                grid: {
+                    display: false,
+                },
+            },
         },
-        x: {
-            grid: {
+        plugins: {
+            legend: {
                 display: false,
             },
-            ticks: {
-                color: '#585E6C',
+        },
+        elements: {
+            point: {
+                radius: 0,
             },
         },
-    },
-    plugins: {
-        legend: {
-            display: false,
+        animation: {
+            duration: (defaultAnimationDuration / (bet?.speed ?? 1)) * 1000,
         },
-    },
-    elements: {
-        line: {
-            tension: 1,
-        },
-    },
+    }
 }

@@ -90,7 +90,11 @@ export function Game() {
 
     const clearRound = () => {
         setIsDone(true)
-        setStarted(false)
+        // setStarted(false)
+
+        setTimeout(() => {
+            location.reload()
+        }, 5000)
     }
 
     const startGame = () => {
@@ -124,14 +128,14 @@ export function Game() {
                                 <PointConfiguration
                                     bet={bet}
                                     started={started}
-                                    onChange={(value: number) =>
+                                    onChange={(value: number) => {
                                         dispatch(
                                             RoundActions.config({
                                                 ...bet,
                                                 points: value,
                                             }),
                                         )
-                                    }
+                                    }}
                                 />
 
                                 <MultiplierConfiguration
@@ -203,7 +207,6 @@ export function Game() {
                     </div>
                 </div>
             </div>
-
             <div className="grid w-full max-w-screen-xl gap-5 mx-auto lg:grid-cols-2">
                 <Suspense fallback={<div></div>}>
                     <Ranking isDone={isDone} />

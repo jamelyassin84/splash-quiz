@@ -30,4 +30,13 @@ export const roundReducer = createReducer(initialState, (builder) => {
         .addCase(RoundActions.create.fulfilled, (state, action) =>
             roundAdapter.setAll(state, [action.payload]),
         )
+        .addCase(RoundActions.clear, (state, action) => {
+            state.bet = {
+                speed: 5,
+                points: 50,
+                multiplier: 2.25,
+            }
+
+            return roundAdapter.removeAll(state)
+        })
 })

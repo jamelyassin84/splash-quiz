@@ -13,10 +13,12 @@ export default function MultiplierConfiguration(props: Props) {
 
     const handleDecrement = () => {
         setMultiplier((prevMultiplier) => Math.max(prevMultiplier - 0.25, 0))
+        onChange(Math.max(multiplier - 0.25, 0))
     }
 
     const handleIncrement = () => {
         setMultiplier((prevMultiplier) => prevMultiplier + 0.25)
+        onChange(multiplier + 0.25)
     }
 
     const handleChange = (event: any) => {

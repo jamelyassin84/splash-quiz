@@ -37,4 +37,6 @@ const load = createAsyncThunk('Message request', async (roundId: string) => {
     }
 })
 
-export const MessageActions = {system, load, upsert, add}
+const clear = createAction('Message clear')
+
+export const MessageActions = {system, load, upsert, add, clear}

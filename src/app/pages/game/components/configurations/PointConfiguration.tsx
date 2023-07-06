@@ -14,6 +14,7 @@ export default function PointConfiguration(props: Props) {
 
     const handleIncrement = () => {
         setPoints(points + 25)
+        onChange(points - 25)
     }
 
     const handleDecrement = () => {

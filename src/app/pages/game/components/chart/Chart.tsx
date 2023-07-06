@@ -1,4 +1,3 @@
-import {empty} from '@/app/core/helpers/helpers'
 import {Bet} from '@/app/core/models/bet.model'
 import {ChartData} from '@/app/core/models/system/chart-data.model'
 import React, {useEffect, useState} from 'react'
@@ -71,7 +70,7 @@ const Chart = (props: Props) => {
                 <circle
                     cx={cx}
                     cy={cy}
-                    r={10} // Set a bigger radius for the dot
+                    r={8}
                     stroke={stroke}
                     fill="#FEBF28"
                     strokeWidth={0}
@@ -83,9 +82,9 @@ const Chart = (props: Props) => {
     }
 
     return (
-        <div className="bg-card border border-default-border w-full min-h-[600px] rounded-lg bg-card-bg relative">
+        <div className="bg-card border border-default-border w-full min-h-[600px] rounded-lg bg-card-bg relative z-[1]">
             <div
-                className={`mt-32 font-black text-center e text-7xl  ${
+                className={`mt-32 font-black text-center e text-7xl relative z-[1] ${
                     isDone ? 'text-rose-500' : 'text-white'
                 }`}
             >
@@ -100,13 +99,13 @@ const Chart = (props: Props) => {
                 x
             </div>
 
-            <div className="absolute w-full p-10 bottom-10">
+            <div className="absolute w-full p-10 bottom-10 z-[999]">
                 {data.length !== 0 && (
                     <div>
-                        <LineChart width={730} height={350} data={data}>
+                        <LineChart width={730} height={450} data={data}>
                             <XAxis dataKey="name" domain={[0, 50]} />
                             <div className="hidden">
-                                <YAxis domain={[0, 10]} />
+                                <YAxis domain={[0, 50]} />
                             </div>
                             <Line
                                 type="monotone"

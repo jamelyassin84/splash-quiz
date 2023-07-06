@@ -29,4 +29,6 @@ const upsert = createAsyncThunk('Player upsert', async (payload: Player) => {
     }
 })
 
-export const PlayerActions = {system, upsert, add}
+const clear = createAction('Player clear')
+
+export const PlayerActions = {system, upsert, add, clear}
